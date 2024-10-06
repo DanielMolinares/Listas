@@ -5,85 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Tareas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .search {
-            margin-bottom: 20px;
-        }
-        .search input {
-            width: 70%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-        .search button {
-            padding: 8px 12px;
-            border: none;
-            background-color: #28a745;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .search button:hover {
-            background-color: #218838;
-        }
-        .li-container {
-            margin-top: 20px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .empty {
-            margin-top: 20px;
-        }
-        .btn-delete {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
+    <div>
         <h1>Lista de Tareas</h1>
-        <div class="search">
+        <div>
             <form>
                 <input type="text" placeholder="Agregar tarea...">
-                <button class="btn-add
+                <button>+</button>
+            </form>
+        </div>
+        <div>
+            <ul>
+                
+            </ul>
+        </div>
+        <div>
+            <p>No tienes tareas pendientes.</p>
+        </div>
+    </div>
+    <script>
+        const input = document.querySelector("input");
+        const addBtn = document.querySelector("button");
+        const ul = document.querySelector("ul");
+        const empty = document.querySelector("p");
+
+        addBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const text = input.value;
+
+            if (text !== "") {
+                const li = document.createElement("li");
+                const p = document.createElement("p");
+                p.textContent = text;
+
+                li.appendChild(p);
+                li.appendChild(addDeleteBtn());
+                ul.appendChild(li);
+
+                input.value = "";
+                empty.style.display = "none";
+            }
+        });
+
+        function addDeleteBtn() {
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "X";
+
+            deleteBtn.addEventListener("click", (e) => {
+                const item = e.target.parentElement;
+                ul.removeChild(item);
+
+                const items = document.querySelectorAll("li");
+
+                if (items.length === 0) {
+                    empty.style.display = "block";
+                }
+            });
+
+            return deleteBtn;
+        }
+    </script>
+</body>
+</html>
